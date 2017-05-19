@@ -1,26 +1,25 @@
 angular
     .module('PokemonApp')
     .factory('PokemonsService', function($http) {
-
+			$http.defaults.headers.common = {
+				"application-id": "0E51D589-DE30-9097-FFC6-7C71C4407800",
+				"secret-key": "36F7953C-049A-2213-FF62-5F6FB1BD6600"
+			};
+ 
             return {
 
                 getPokemons: function() {
-                    return $http.get('http://pokeapi.co/api/v2/pokemon/?limit=10');
+                    return $http.get('http://api.backendless.com/v1/data/pokemon');
                 },
 
                 getPokemon: function(pokemonId) {
-                    return $http.get('http://pokeapi.co/api/v2/pokemon/' + pokemonId);
+                    return $http.get('http://api.backendless.com/v1/data/pokemon/' + pokemonId);
                 },
 
                 createPokemon: function(pokemonData) {
                     return $http({
                         method: 'POST',
-                        url: 'https://api.backendless.com/v1/data/pokemon',
-                        headers: {
-                            "application-id": "4B730C92-F81E-236B-FFF0-6651FE882800",
-                            "secret-key": "CB6DE86C-6069-86C4-FF1C-9049D5AC9400"
-
-                        },
+                        url: 'https://api.backendless.com/v1/data/pokemon/',
                         data: pokemonData
                     });
                 },
@@ -29,11 +28,14 @@ angular
                     return $http({
                         method: 'DELETE',
                         url: 'https://api.backendless.com/v1/data/pokemon/' + pokemonId,
-                        headers: {
-                            "application-id": "4B730C92-F81E-236B-FFF0-6651FE882800",
-                            "secret-key": "CB6DE86C-6069-86C4-FF1C-9049D5AC9400"
-
-                        }
+                    });
+                },
+				
+				editPokemon: function(id, pokemonData) {
+                    return $http({
+                        method: 'PUT',
+                        url: 'http://api.backendless.com/v1/data/pokemon/' + id,
+                        data: pokemonData
                     });
                 }
 
